@@ -33,8 +33,10 @@
 				slideWidth: 900,
 				behavior: {
 					onClick: function (data) { 
-						var msg = "You clicked on an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-						$("#eventMessage").text(msg);
+						//console.log(event, data);
+						$(".ganttview-vtheader-series.row-" + data.id).slideToggle();
+						$(".ganttview-block-container.row-" + data.id).slideToggle();
+						$(".ganttview-block.row-" + data.id).slideToggle();
 					},
 					onResize: function (data) { 
 						var msg = "You resized an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";

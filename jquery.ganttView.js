@@ -142,10 +142,14 @@ behavior: {
             for (var i = 0; i < data.length; i++) {
                 var itemDiv = jQuery("<div>", { "class": "ganttview-vtheader-item" });
                 itemDiv.append(jQuery("<div>", {
-                    "class": "ganttview-vtheader-item-name",
-                    "css": { "height": (data[i].series.length * cellHeight) + "px" }
+                    "class": "ganttview-vtheader-item-name " + "row-" + data[i].id,
+                    "css": { }
                 }).append(data[i].name));
-                var seriesDiv = jQuery("<div>", { "class": "ganttview-vtheader-series" });
+                var seriesDiv = jQuery("<div>",
+						{ "class": "ganttview-vtheader-series " + "row-"+data[i].id,
+
+						});
+				addBlockData(itemDiv, data[i], data.series);
                 for (var j = 0; j < data[i].series.length; j++) {
                     seriesDiv.append(jQuery("<div>", { "class": "ganttview-vtheader-series-name" })
 						.append(data[i].series[j].name));
@@ -210,7 +214,7 @@ behavior: {
             var blocksDiv = jQuery("<div>", { "class": "ganttview-blocks" });
             for (var i = 0; i < data.length; i++) {
                 for (var j = 0; j < data[i].series.length; j++) {
-                    blocksDiv.append(jQuery("<div>", { "class": "ganttview-block-container" }));
+                    blocksDiv.append(jQuery("<div>", { "class": "ganttview-block-container row-" + data[i].id }));
                 }
             }
             div.append(blocksDiv);
@@ -225,7 +229,7 @@ behavior: {
                     var size = DateUtils.daysBetween(series.start, series.end) + 1;
 					var offset = DateUtils.daysBetween(start, series.start);
 					var block = jQuery("<div>", {
-                        "class": "ganttview-block",
+                        "class": "ganttview-block row-" + data[i].id,
                         "title": series.name + ", " + size + " days",
                         "css": {
                             "width": ((size * cellWidth) - 9) + "px",
@@ -280,7 +284,7 @@ behavior: {
 		}
 
         function bindBlockClick(div, callback) {
-            jQuery("div.ganttview-block", div).live("click", function () {
+            jQuery("div.ganttview-vtheader-item", div).live("click", function () {
                 if (callback) { callback(jQuery(this).data("block-data")); }
             });
         }
